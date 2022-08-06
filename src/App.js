@@ -10,7 +10,7 @@ import Appointment from './Pages/Appointment/Appointment';
 
 function App() {
   return (
-    <div className="px-12">
+    <div className="">
       <Navbar></Navbar>
       <Routes>
         <Route path='/' element={<Home></Home>}></Route>
