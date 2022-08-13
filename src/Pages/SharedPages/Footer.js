@@ -3,7 +3,7 @@ import React from 'react';
 const Footer = () => {
     return (
         <footer className=" p-10 lg:bg-[url('/src/assets/images/footer.png')] bg-cover bg-center mt-12">
-            <div className="footer">
+            <div className="footer justify-around">
                 <div>
                     <span className="footer-title">Services</span>
                     <a className="link link-hover font-semibold">Branding</a>
