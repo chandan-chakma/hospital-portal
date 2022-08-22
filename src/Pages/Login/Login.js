@@ -7,6 +7,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useToken from './../../Hooks/useToken';
 
 
 
@@ -23,24 +24,28 @@ const Login = () => {
         error,
     ] = useSignInWithEmailAndPassword(auth);
 
+
     const [signInWithGoogle, user1, loading1, error1] = useSignInWithGoogle(auth);
 
+    const [token] = useToken(user || user1);
     const [sendPasswordResetEmail, sending, error2] = useSendPasswordResetEmail(auth);
+
 
     const { register, formState: { errors }, handleSubmit } = useForm();
 
     useEffect(() => {
-        if (user || user1) {
-            console.log(user)
+        if (token) {
+            // console.log(user)
             navigate(from, { replace: true });
         }
 
-    }, [user, user1, navigate, from])
-
+    }, [token, navigate, from])
 
     if (loading || loading1) {
         return <Loading></Loading>
     }
+
+
 
     let errorMessage;
     if (error || error1) {

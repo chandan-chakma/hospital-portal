@@ -12,10 +12,16 @@ import SignUp from './Pages/Login/SignUp';
 import RequireAuth from './Pages/SharedPages/RequireAuth';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Dashboard from './Pages/Dashboard/Dashboard';
+import MyAppointment from './Pages/Dashboard/MyAppointment';
+import MyReview from './Pages/Dashboard/MyReview';
+import AllUser from './Pages/Dashboard/AllUser';
+import RequireAdmin from './Pages/Login/RequireAdmin';
+import AddDoctor from './Pages/Dashboard/AddDoctor';
 
 function App() {
   return (
-    <div className="">
+    <div className="max-w-7xl mx-auto">
       <Navbar></Navbar>
       <Routes>
         <Route path='/' element={<Home></Home>}></Route>
@@ -23,6 +29,22 @@ function App() {
         <Route path='/appointment' element={<RequireAuth>
           <Appointment></Appointment>
         </RequireAuth>}></Route>
+
+
+        <Route path='/dashboard' element={<RequireAuth>
+          <Dashboard></Dashboard>
+        </RequireAuth>}>
+          <Route index element={<MyAppointment></MyAppointment>}></Route>
+          <Route path='myreview' element={<MyReview></MyReview>}></Route>
+          <Route path='alluser' element={<RequireAdmin>
+            <AllUser></AllUser>
+          </RequireAdmin>}></Route>
+          <Route path='adddoctor' element={<RequireAdmin>
+            <AddDoctor></AddDoctor>
+          </RequireAdmin>}></Route>
+        </Route>
+
+
         <Route path='/reviews' element={<Reviews></Reviews>}></Route>
         <Route path='/contactus' element={<ContactUs></ContactUs>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>

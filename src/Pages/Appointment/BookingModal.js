@@ -4,10 +4,11 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from './../../firebase.init';
 import { toast } from 'react-toastify';
 
-const BookingModal = ({ booking, date, setBooking }) => {
+const BookingModal = ({ date, booking, setBooking, refetch }) => {
     const { _id, name, slots } = booking;
     const [user, loading, error] = useAuthState(auth);
-    const formateDate = format(date, 'pp');
+    const formatDate = format(date, 'PP');
+
 
     const handleBooking = (event) => {
         event.preventDefault();
@@ -16,15 +17,15 @@ const BookingModal = ({ booking, date, setBooking }) => {
         const bookingTreatment = {
             treatmentId: _id,
             treatment: name,
-            date: formateDate,
+            date: formatDate,
             slot,
             patient: user.email,
             patientName: user.displayName,
             phone: event.target.phone.value
         }
-
+        // console.log(date);
         fetch('http://localhost:5000/booking', {
-            method: 'POST',
+            method: "POST",
             headers: {
                 'content-type': 'application/json'
             },
@@ -32,17 +33,18 @@ const BookingModal = ({ booking, date, setBooking }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 if (data.success) {
-                    toast(`Appointment is set, ${formateDate} at ${slot}`)
+                    toast(`Appointment is set , ${formatDate} at ${slot}`)
                 }
                 else {
-                    toast.error(`Already have and appointment on ${data.booking?.date} at ${data.booking?.slot}`)
+                    toast.error(`Already have an appointment on,  ${data.booking?.date} at ${data.booking?.slot}`)
                 }
-                setBooking(null)
+                refetch();
+                setBooking(null);
+            })
 
-            });
-        // console.log(bookingTreatment);
+
 
     }
     return (
@@ -55,7 +57,7 @@ const BookingModal = ({ booking, date, setBooking }) => {
 
                     <form onSubmit={handleBooking} className="grid grid-cols-1 gap-4 justify-items-center">
 
-                        <input type="text" placeholder="Type here" readOnly disabled value={format(date, 'PPP')} className="input input-bordered w-full max-w-xs" />
+                        <input type="text" placeholder="Type here" disabled value={format(date, 'PPP')} className="input input-bordered w-full max-w-xs" />
                         <select name='slot' className="select select-bordered w-full max-w-xs">
                             {slots.map((slot, index) => <option
                                 key={index}
