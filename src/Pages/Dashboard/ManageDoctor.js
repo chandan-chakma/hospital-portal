@@ -1,62 +1,54 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import Loading from '../SharedPages/Loading';
-import User from './User';
+import Doctor from './Doctor';
 
-const AllUser = () => {
-
-
-    const { data: users, isLoading, refetch } = useQuery('user', () =>
-        fetch('https://pacific-tor-30421.herokuapp.com/user', {
+const ManageDoctor = () => {
+    const { data: doctors, isLoading, refetch } = useQuery('doctors', () =>
+        fetch('https://pacific-tor-30421.herokuapp.com/doctor', {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
+
             }
         })
-            .then(res => res.json())
-    );
-
-
+            .then(res => res.json()))
 
     if (isLoading) {
         return <Loading></Loading>
     }
     return (
         <div>
-            <h2>{users.length}</h2>
-            <div className="overflow-x-auto">
-                <table className="table w-full">
-                    {/* <!-- head --> */}
+            <h4>Manage Doctor {doctors.length}</h4>
+            <div class="overflow-x-auto">
+                <table class="table w-full">
+
                     <thead>
                         <tr>
                             <th></th>
+                            <th>Avatar</th>
                             <th>Name</th>
-                            <th>Service</th>
-                            <th>Time</th>
-                            <th>Date</th>
+                            <th>Specialty</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* <!-- row 1 --> */}
                         {
-                            users.map((user, index) => <User
-                                key={user._id}
-                                user={user}
+                            doctors.map((doctor, index) => <Doctor
+                                key={doctor._id}
+                                doctor={doctor}
                                 index={index}
                                 refetch={refetch}
                             >
 
-                            </User>)
+                            </Doctor>)
                         }
-
 
                     </tbody>
                 </table>
             </div>
-
-
         </div>
     );
 };
 
-export default AllUser;
+export default ManageDoctor;

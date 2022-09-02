@@ -9,7 +9,7 @@ const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
     const { data: services, isLoading } = useQuery('/services',
         () =>
-            fetch('http://localhost:5000/service')
+            fetch('https://pacific-tor-30421.herokuapp.com/service')
                 .then(res => res.json())
     )
 
@@ -42,7 +42,7 @@ const AddDoctor = () => {
 
                     console.log('imgbb', result);
 
-                    fetch('http://localhost:5000/doctor', {
+                    fetch('https://pacific-tor-30421.herokuapp.com/doctor', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',

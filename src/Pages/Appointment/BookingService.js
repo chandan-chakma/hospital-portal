@@ -1,7 +1,7 @@
 import React from 'react';
 
 const BookingService = ({ service, setBooking }) => {
-    const { name, slots } = service;
+    const { name, slots, price } = service;
 
     return (
         <div className="card lg:max-w-lg bg-base-100 shadow-xl">
@@ -14,6 +14,8 @@ const BookingService = ({ service, setBooking }) => {
                 }
                 </p>
                 <p>{slots.length} {slots.length > 1 ? 'spaces' : 'space'} available</p>
+
+                <p>{price ? <small> Price:{price}</small> : 'none'}</p>
                 <div className="card-actions justify-center mt-6">
                     <label
                         disabled={slots.length === 0}

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from './../../firebase.init';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 
 const MyAppointment = () => {
@@ -13,7 +13,7 @@ const MyAppointment = () => {
 
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/booking?patient=${user.email}`, {
+            fetch(`https://pacific-tor-30421.herokuapp.com/booking?patient=${user.email}`, {
                 method: "GET",
                 headers: {
                     'authorization': `bearer ${localStorage.getItem('accessToken')}`
@@ -54,6 +54,8 @@ const MyAppointment = () => {
                             <th>Service</th>
                             <th>Time</th>
                             <th>Date</th>
+                            <th>price</th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,14 +69,22 @@ const MyAppointment = () => {
                                 <td>{appointment.treatment}</td>
                                 <td>{appointment.slot}</td>
                                 <td>{appointment.date}</td>
+                                <td>
+                                    {(appointment.price && !appointment.paid) && <Link to={`/dashboard/payment/${appointment._id}`}><button>pay</button></Link>}
+                                    {(appointment.price && appointment.paid) && <Link to={` `}><button>paid</button></Link>}
+
+
+
+
+                                </td>
                             </tr>)
                         }
 
 
                     </tbody>
                 </table>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 
